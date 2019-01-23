@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+ruby '2.5.0'
+
+gem 'rack-proxy'
+gem 'rack-test'
+gem 'rake'
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'test-unit'

@@ -1,0 +1,32 @@
+task default: ['server:run']
+
+namespace :server do
+  task :run do
+    exec 'rackup'
+  end
+end
+
+namespace :test do
+  task :setup do
+    system "rm -rf ./tests/test_files/"
+    system "mkdir -p ./tests/test_files/"
+  end
+
+  task :all do
+    Dir["./tests/*error*.rb"].each do |test_file|
+      next if /base_test.rb$/ =~ test_file
+      system "ruby #{test_file}"
+      exit($?.exitstatus) unless $?.exitstatus == 0
+    end
+  end
+
+  task :base do
+    ["./tests/users_test.rb", "./tests/orders_test.rb",
+      "./tests/items_test.rb"].each do |test_file|
+      next if /base_test.rb$/ =~ test_file
+      system "ruby #{test_file}"
+      exit($?.exitstatus) unless $?.exitstatus == 0
+    end
+  end
+end
+
